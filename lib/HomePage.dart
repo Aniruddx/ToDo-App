@@ -1,6 +1,9 @@
+//import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:todo/Widgets/todoitem.dart';
 import 'package:todo/models/todo.dart';
+import 'package:todo/profile.dart';
+import 'package:todo/progress.dart';
 
 class HomePage extends StatefulWidget{
   //const HomePage({super.key});
@@ -19,20 +22,22 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context ) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.black87,
       
       appBar: _buildAppBar(),
+      
       body: Stack (
         children : [
           Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
+              SizedBox(height: 20),
               //searchBox(),
               Expanded(
                 child: ListView(
                   children: [
-                    Container(
+                    /*Container(
                       margin: EdgeInsets.only(top: 10, bottom: 10,),
                       child: Text('To Do Lists',
                       style: TextStyle(
@@ -40,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.white,
                       ),
                       ),
-                    ),
+                    ),*/
                     for ( ToDo todoo in widget.todosList ) 
                     todoitem(todo : todoo, 
                     ondeleteItem: _deletetodoItem, 
@@ -55,7 +60,9 @@ class _HomePageState extends State<HomePage> {
         ),
         Align(
         alignment: Alignment.bottomCenter,
-        child: Row( children: [
+        child: Row( 
+          children: [
+            
           Expanded(child: Container( 
             margin: EdgeInsets.only(
               bottom: 10, 
@@ -63,15 +70,28 @@ class _HomePageState extends State<HomePage> {
               left: 20,
             ),
             decoration: BoxDecoration(
-              color: Colors.deepPurpleAccent,
+              color: Colors.black87,            
             ),
             child: TextField(
+              cursorColor: Colors.white70,
+              style: TextStyle(
+                color: Colors.white70,
+                letterSpacing: 2,
+              ),
               controller: widget._toDoController,
               decoration: InputDecoration(
-                hintText: 'Add new toDo',
+                border: InputBorder.none,
+                hintText: 'Add a new task',
+                hintStyle: TextStyle(
+                  letterSpacing: 2,
+                  fontSize: 13,
+                  color: Colors.white70,
+                ),
+                fillColor: Colors.white70,
                 contentPadding: EdgeInsets.only(left: 10, right: 10),
               ),
             ),
+          
           ),
           ),
           Container(
@@ -80,10 +100,11 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 _addtodoItem(widget._toDoController.text);
               }, 
-              child: Icon(Icons.add_box_sharp),
+              child: Icon(Icons.add_box_outlined),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(50,50),
-                elevation: 20
+                elevation: 20,
+                backgroundColor: Colors.black87,
               ),
               ),
           )
@@ -98,17 +119,40 @@ class _HomePageState extends State<HomePage> {
     return AppBar(
       backgroundColor: Colors.black,
       title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [ 
-      Icon(Icons.menu_outlined,
-      color: Colors.white,
-      size: 30,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+      children: [ 
+      ElevatedButton( 
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.black87
+          ),
+        child: CircleAvatar(
+          backgroundImage: AssetImage('assets/images/GTR.jpg'),
+          radius: 20,
+        ),
+        onPressed: () {
+          setState(() { Navigator.push(context, 
+          MaterialPageRoute(builder: ((context) => NinjaCard())));
+          });
+        },
       ),
-      Container(
-        height: 45,
-        width: 45,
-        child: Icon(Icons.home_sharp),
+
+      Text(
+        'To Do Lists',
+        style: TextStyle(
+          fontSize: 23,
+          letterSpacing: 2
+        ),
       ),
       
+      IconButton(
+        iconSize: 30,
+        icon: const Icon(
+          Icons.menu_outlined), 
+        onPressed: () {
+          setState(() { Navigator.push(context, MaterialPageRoute(builder: ((context) => progress())));
+          });
+        },
+      ),
       ]
       ),
     );
@@ -165,3 +209,6 @@ void _addtodoItem(String todoText) {
         );
   }*/
 }
+
+
+

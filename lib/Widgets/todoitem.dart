@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:todo/models/todo.dart';
@@ -20,25 +21,26 @@ class todoitem extends StatefulWidget {
 
   @override
   State<todoitem> createState() => _todoitemState();
+  
+  
 }
 
 class _todoitemState extends State<todoitem> {
 
   final todosList = ToDo.todoList();
-  final _toDoController1 = TextEditingController();
-
+  
   @override
 
-  /*void dispose (){
-    _toDoController1.clear();
-  }*/
+  
   Widget build(BuildContext context) {
     return GestureDetector( 
       onTap: () {
         widget.ontodoChanged(widget.todo);
       },
-      onLongPress: () => {
-        //_edittodoItem(widget._toDoController1.text)
+      onLongPress: () {
+        setState () {
+           editBox();
+        }
       },
     child: Container(
       margin: EdgeInsets.only(bottom: 20),
@@ -46,15 +48,16 @@ class _todoitemState extends State<todoitem> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)
         ),
         contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-        tileColor: Colors.deepPurpleAccent,
+        tileColor: Colors.black87,
         leading: Icon(
           widget.todo.isDone? Icons.check_box_outlined : Icons.check_box_outline_blank, 
-        color: Colors.white,),
+        color: Colors.white70,),
         title: Text(
           widget.todo.todoText!,
         style: TextStyle(
           fontSize: 15,
-          color: Colors.white,
+          letterSpacing: 2,
+          color: Colors.white70,
           decoration: widget.todo.isDone? TextDecoration.lineThrough : null,
         ),
         ),
@@ -64,7 +67,7 @@ class _todoitemState extends State<todoitem> {
           height: 500,
           width: 30,
           child: IconButton( 
-            color: Colors.amberAccent,
+            color: Colors.redAccent,
             iconSize: 27,
             icon: Icon(Icons.delete_outline),
             onPressed: () {
@@ -76,6 +79,20 @@ class _todoitemState extends State<todoitem> {
     ));
   }
 
- 
 
+  Widget editBox() {
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+          color: CupertinoColors.black,
+        ),
+        child: TextField(
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.all(20),
+
+          ),
+        )
+      );
+  }
 }
+
